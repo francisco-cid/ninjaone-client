@@ -1,5 +1,8 @@
 import './App.css';
 import DataTable from './components/DataTable/DataTable';
+import NinjaHeader from './components/NinjaHeader/NinjaHeader';
+import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
+import {ReactComponent as AddIcon} from './icons/add.svg';
 
 function App() {
   const devices = [
@@ -13,9 +16,37 @@ function App() {
     { id: 8, system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32 GB' },
   ];
   return (
-    <div className="App">
-        <DataTable devices={devices}/>
-    </div>
+    <>
+      <NinjaHeader/>
+      <div className="page-wrapper">
+      <div className="row">
+        <p className="subtitle">Devices</p>
+        <button className="add-btn">
+          <AddIcon fill="white" className="add-icon"/>
+          <p className="btn-text">Add device</p>
+        </button>
+      </div>
+      <div className="filters-row">
+        <div className="filters">
+          <input/>
+          <select name="type">
+            <option>Mac</option>
+            <option>Windows</option>
+            <option>Linux</option>
+          </select>
+          <select name="capacity">
+            <option>32</option>
+            <option>64</option>
+            <option>128</option>
+          </select>
+        </div>
+        <button className="refresh-btn">
+          <RefreshIcon/>
+        </button>
+      </div>
+      <DataTable devices={devices}/>
+  </div>
+    </>
   );
 }
 

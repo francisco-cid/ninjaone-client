@@ -1,0 +1,15 @@
+.icon-name-row {
+    display: flex;
+    column-gap: 10px;
+}
+
+.device-info {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.device-details {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}

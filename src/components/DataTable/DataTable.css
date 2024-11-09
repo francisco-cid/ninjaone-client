@@ -1,0 +1,16 @@
+.device-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .device-table th {
+    text-align: left;
+    font-size: 1rem;
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .device-table td {
+    padding: 16px;
+    border-bottom: 1px solid #eee;
+  }

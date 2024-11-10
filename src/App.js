@@ -28,27 +28,36 @@ function App() {
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value)
 
   const defaultDevices = [
-    { id: 1, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '128' },
-    { id: 2, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '64' },
-    { id: 3, system_name: 'WINXP-125498HQ', type: 'WINDOWS', hdd_capacity: '64' },
-    { id: 4, system_name: 'MAC-SMITH-JOHN', type: 'MAC', hdd_capacity: '64' },
-    { id: 5, system_name: 'MAC-RODRIGUEZ-J', type: 'MAC', hdd_capacity: '32' },
-    { id: 6, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '32' },
-    { id: 7, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '32' },
-    { id: 8, system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32' },
+    { id: '1', system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '128' },
+    { id: '2', system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '64' },
+    { id: '3', system_name: 'WINXP-125498HQ', type: 'WINDOWS', hdd_capacity: '64' },
+    { id: '4', system_name: 'MAC-SMITH-JOHN', type: 'MAC', hdd_capacity: '64' },
+    { id: '5', system_name: 'MAC-RODRIGUEZ-J', type: 'MAC', hdd_capacity: '32' },
+    { id: '6', system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '32' },
+    { id: '7', system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '32' },
+    { id: '8', system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32' },
   ];
 
   // latest list of devices retrieved from API
   const [devices, setDevices] = useState([])
 
   // fetch list of devices from API
+  const loadDevices = async () => {
+    const data = await fetchDevices();
+    console.log('data', data)
+    setDevices(data)
+  };
+  // runs on first load to get devices
   useEffect(() => {
-    const loadDevices = async () => {
-      const data = await fetchDevices();
-      setDevices(data)
-    }
     loadDevices();
   }, []);
+
+  // handle refresh
+  const handleRefresh = () => {
+    // reset filters
+    setSelectedType("ALL")
+    loadDevices();
+  }
 
   // list of devices displayed on table
   const [displayedDevices, setDisplayedDevices] = useState(devices)
@@ -106,7 +115,11 @@ function App() {
             selectedValue={selectedSort}
           />
         </div>
-        <button className="refresh-btn">
+        <button
+        className="refresh-btn"
+        onClick={handleRefresh}
+        aria-label="refresh devices list"
+        >
           <RefreshIcon/>
         </button>
       </div>

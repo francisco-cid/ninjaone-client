@@ -7,7 +7,8 @@ import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
 import { fetchDevices } from './api/devices';
 import { useState, useEffect } from 'react';
-import { DEVICE_TYPES, SORT_OPTIONS } from './constants';
+import { DEVICE_TYPES, SORT_OPTIONS, MODAL_MODES } from './constants';
+import AddEditModal from './components/AddEditModal/AddEditModal';
 
 function App() {
 
@@ -83,16 +84,27 @@ function App() {
     const sortedDevices = devices.slice().sort(sortFunctions[selectedSort])
     setDisplayedDevices(sortedDevices)
   }, [devices, selectedSort])
+  
+  // add/edit modal controls
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [modalMode, setModalMode] = useState(MODAL_MODES.ADD); // ADD or EDIT
+  const [editDeviceData, setEditDeviceData] = useState(null);
 
 
   
   return (
     <>
+      <AddEditModal
+        show={showAddModal}
+        mode={modalMode}
+        initialValues={editDeviceData}
+        onClose={()=>setShowAddModal(false)}
+      />
       <NinjaHeader/>
       <div className="page-wrapper">
       <div className="row">
         <p className="subtitle">Devices</p>
-        <button className="add-btn">
+        <button className="add-btn" onClick={()  => setShowAddModal(true)}>
           <AddIcon fill="white" className="add-icon"/>
           <p className="btn-text">Add device</p>
         </button>

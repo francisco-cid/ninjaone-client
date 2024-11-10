@@ -30,6 +30,11 @@
   display: flex;
   align-items: center;
   padding: 12px;
+  cursor: pointer;
+}
+
+.add-btn:hover {
+  opacity: 0.9;
 }
 
 .btn-text {
@@ -52,5 +57,4 @@
 
 .refresh-btn:hover {
   transform: scale(1.25);  /* Slightly enlarge icon on hover */
-  color: #007bff;         /* Change icon color on hover */
 }

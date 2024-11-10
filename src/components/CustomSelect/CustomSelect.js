@@ -10,7 +10,7 @@ const CustomSelect = ({ selectedValue, options, onChange, label }) => {
                 onChange={(e) => onChange && onChange(e.target.value)}
             >
                 {options.map((opt) => (
-                    <option value={opt.value} key={opt.text}>
+                    <option value={opt.value} key={opt.text} disabled={opt?.disabled} selected={opt?.disabled}>
                         {selectedValue === opt.value ? `${label} ` : null}{opt.text}
                     </option>
                 ))}

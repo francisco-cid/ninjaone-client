@@ -1,0 +1,119 @@
+/* Overlay for background dimming */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /*Ensures modal is on top */
+}
+  
+  /* Modal content container */
+.modal-content {
+    background-color: #ffffff;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 540px;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+  
+/* Title for the modal */
+.modal-content h2 {
+    margin: 0px 0px 24px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #211F33;
+}
+  
+/* Form styling */
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Space between each form element */
+}
+  
+.modal-content label {
+    font-size: 14px;
+    color: #211F33;
+}
+  
+.modal-content input {
+    padding: 8px 12px;
+    border: 1px solid #48446940;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+}
+  
+  .modal-content input:focus,
+  .modal-content select:focus {
+    outline: none;
+    border-color: #007bff; /* Change border color on focus */
+    box-shadow: 0px 0px 2px rgba(0, 123, 255, 0.4);
+}
+  
+  /* Modal action buttons */
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px; /* Space between buttons */
+}
+  
+.modal-actions button {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+  
+.modal-actions button[type="button"] {
+    background-color: #ffffff;
+    color: #337AB7;
+    border: 1px solid;
+    border-color: #48446940;
+}
+  
+.modal-actions button[type="submit"] {
+    background-color: #337AB7;
+    color: #ffffff;
+}
+  
+.modal-actions button[type="button"]:hover,
+.modal-actions button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+.field-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.modal-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.close-btn {
+    background: none; /* No default button background */
+    border: none;     /* Remove default button border */
+    cursor: pointer;  /* Makes the cursor a pointer on hover */
+    padding: 8px;     /* add padding for better click area */
+    transition: transform 0.2s ease, color 0.2s ease; /* Smooth transition */
+    position: relative;
+    bottom: 21px;
+    left: 10px;
+}
+  
+.close-btn:hover {
+    transform: scale(1.25);  /* Slightly enlarge icon on hover */
+}

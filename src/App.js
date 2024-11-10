@@ -37,6 +37,19 @@ function App() {
     { id: 8, system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32 GB' },
   ];
 
+  const [devices, setDevices] = useState(defaultDevices)
+
+  const [displayedDevices, setDisplayedDevices] = useState(devices)
+
+  useEffect(() => {
+    if(selectedType === 'ALL'){
+      setDisplayedDevices(devices)
+    } else {
+      setDisplayedDevices(devices.filter((device) => device.type == selectedType))
+    }
+  }, [devices, selectedType])
+
+
   
   return (
     <>
@@ -71,7 +84,7 @@ function App() {
           <RefreshIcon/>
         </button>
       </div>
-      <DataTable devices={defaultDevices}/>
+      <DataTable devices={displayedDevices}/>
   </div>
     </>
   );

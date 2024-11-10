@@ -5,6 +5,7 @@ import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
 import {ReactComponent as AddIcon} from './icons/add.svg';
 import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
+import { fetchDevices } from './api/devices';
 import { useState, useEffect } from 'react';
 
 function App() {
@@ -38,7 +39,16 @@ function App() {
   ];
 
   // latest list of devices retrieved from API
-  const [devices, setDevices] = useState(defaultDevices)
+  const [devices, setDevices] = useState([])
+
+  // fetch list of devices from API
+  useEffect(() => {
+    const loadDevices = async () => {
+      const data = await fetchDevices();
+      setDevices(data)
+    }
+    loadDevices();
+  }, []);
 
   // list of devices displayed on table
   const [displayedDevices, setDisplayedDevices] = useState(devices)

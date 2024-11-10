@@ -7,25 +7,26 @@ import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
 import { fetchDevices } from './api/devices';
 import { useState, useEffect } from 'react';
+import { DEVICE_TYPES, SORT_OPTIONS } from './constants';
 
 function App() {
-  // TODO move to constants file
+
   const filterOptions = [
-    {value: "ALL", text: "All" },
-    {value: "WINDOWS", text: "Windows" },
-    {value: "MAC", text: "Mac" },
-    {value: "LINUX", text: "Linux"}
+    {value: DEVICE_TYPES.ANY, text: "All" },
+    {value: DEVICE_TYPES.WINDOWS, text: "Windows" },
+    {value: DEVICE_TYPES.MAC, text: "Mac" },
+    {value: DEVICE_TYPES.LINUX, text: "Linux"}
   ]
 
   const sortOptions = [
-    {value: "CAP,DESC", text: "HDD Capacity (Descending)"},
-    {value: "CAP,ASC", text: "HDD Capacity (Ascending)"},
-    {value: "NAME,DESC", text: "Name (Descending)"},
-    {value: "NAME,ASC", text: "Name (Ascending)"},
+    {value: SORT_OPTIONS.CAP_DESCENDING, text: "HDD Capacity (Descending)"},
+    {value: SORT_OPTIONS.CAP_ASCENDING, text: "HDD Capacity (Ascending)"},
+    {value: SORT_OPTIONS.NAME_DESCENDING, text: "Name (Descending)"},
+    {value: SORT_OPTIONS.NAME_ASCENDING, text: "Name (Ascending)"},
   ]
 
-  const [selectedType, setSelectedType] = useState("ALL")
-  const [selectedSort, setSelectedSort] = useState(sortOptions[0].value)
+  const [selectedType, setSelectedType] = useState(DEVICE_TYPES.ANY)
+  const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS.CAP_DESCENDING)
 
   const defaultDevices = [
     { id: '1', system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '128' },
@@ -64,7 +65,7 @@ function App() {
 
   // filter displayed devices by selectedType
   useEffect(() => {
-    if(selectedType === 'ALL'){
+    if(selectedType === DEVICE_TYPES.ANY){
       setDisplayedDevices(devices)
     } else {
       setDisplayedDevices(devices.filter((device) => device.type === selectedType))
@@ -73,12 +74,11 @@ function App() {
 
   // sort displayed devices by selected category and order
   useEffect(() => {
-    // todo move to utils?
     const sortFunctions = {
-      'CAP,DESC': (a, b) => Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
-      'CAP,ASC': (a, b) => Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
-      'NAME,DESC': (a, b) => b.system_name.localeCompare(a.system_name),
-      'NAME,ASC': (a, b) => a.system_name.localeCompare(b.system_name),
+      [SORT_OPTIONS.CAP_DESCENDING]: (a, b) => Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
+      [SORT_OPTIONS.CAP_ASCENDING]: (a, b) => Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
+      [SORT_OPTIONS.NAME_DESCENDING]: (a, b) => b.system_name.localeCompare(a.system_name),
+      [SORT_OPTIONS.NAME_ASCENDING]: (a, b) => a.system_name.localeCompare(b.system_name),
     };
     const sortedDevices = devices.slice().sort(sortFunctions[selectedSort])
     setDisplayedDevices(sortedDevices)

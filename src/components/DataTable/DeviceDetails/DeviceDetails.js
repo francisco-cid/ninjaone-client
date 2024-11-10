@@ -22,7 +22,7 @@ const DeviceDetails = ({name, type, capacity}) => {
                 <OSIcon/>
                 <strong>{name}</strong>
             </div>
-            <div className="device-info">{`${type.charAt(0) + type.slice(1).toLowerCase()} workstation - ${capacity}`}</div>
+            <div className="device-info">{`${type.charAt(0) + type.slice(1).toLowerCase()} workstation - ${capacity} GB`}</div>
         </div>
     )
 };

@@ -27,27 +27,43 @@ function App() {
   const [selectedSort, setSelectedSort] = useState(sortOptions[0].value)
 
   const defaultDevices = [
-    { id: 1, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '128 GB' },
-    { id: 2, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '64 GB' },
-    { id: 3, system_name: 'WINXP-125498HQ', type: 'WINDOWS', hdd_capacity: '64 GB' },
-    { id: 4, system_name: 'MAC-SMITH-JOHN', type: 'MAC', hdd_capacity: '64 GB' },
-    { id: 5, system_name: 'MAC-RODRIGUEZ-J', type: 'MAC', hdd_capacity: '32 GB' },
-    { id: 6, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '32 GB' },
-    { id: 7, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '32 GB' },
-    { id: 8, system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32 GB' },
+    { id: 1, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '128' },
+    { id: 2, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '64' },
+    { id: 3, system_name: 'WINXP-125498HQ', type: 'WINDOWS', hdd_capacity: '64' },
+    { id: 4, system_name: 'MAC-SMITH-JOHN', type: 'MAC', hdd_capacity: '64' },
+    { id: 5, system_name: 'MAC-RODRIGUEZ-J', type: 'MAC', hdd_capacity: '32' },
+    { id: 6, system_name: 'DESKTOP-0VCBIFF', type: 'WINDOWS', hdd_capacity: '32' },
+    { id: 7, system_name: 'LINUX-SMITH-J', type: 'LINUX', hdd_capacity: '32' },
+    { id: 8, system_name: 'MAC-ADAMS-R', type: 'MAC', hdd_capacity: '32' },
   ];
 
+  // latest list of devices retrieved from API
   const [devices, setDevices] = useState(defaultDevices)
 
+  // list of devices displayed on table
   const [displayedDevices, setDisplayedDevices] = useState(devices)
 
+  // filter displayed devices by selectedType
   useEffect(() => {
     if(selectedType === 'ALL'){
       setDisplayedDevices(devices)
     } else {
-      setDisplayedDevices(devices.filter((device) => device.type == selectedType))
+      setDisplayedDevices(devices.filter((device) => device.type === selectedType))
     }
   }, [devices, selectedType])
+
+  // sort displayed devices by selected category and order
+  useEffect(() => {
+    // todo move to utils?
+    const sortFunctions = {
+      'CAP,DESC': (a, b) => Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
+      'CAP,ASC': (a, b) => Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
+      'NAME,DESC': (a, b) => b.system_name.localeCompare(a.system_name),
+      'NAME,ASC': (a, b) => a.system_name.localeCompare(b.system_name),
+    };
+    const sortedDevices = devices.slice().sort(sortFunctions[selectedSort])
+    setDisplayedDevices(sortedDevices)
+  }, [devices, selectedSort])
 
 
   

@@ -56,33 +56,28 @@ function App() {
   // handle refresh
   const handleRefresh = () => {
     // reset filters
-    setSelectedType("ALL")
+    setSelectedType(DEVICE_TYPES.ANY)
     loadDevices();
   }
 
   // list of devices displayed on table
   const [displayedDevices, setDisplayedDevices] = useState(devices)
 
-  // filter displayed devices by selectedType
+  // filter and sort displayed devices by selected category and order
   useEffect(() => {
-    if(selectedType === DEVICE_TYPES.ANY){
-      setDisplayedDevices(devices)
-    } else {
-      setDisplayedDevices(devices.filter((device) => device.type === selectedType))
-    }
-  }, [devices, selectedType])
-
-  // sort displayed devices by selected category and order
-  useEffect(() => {
+    // filter devices base on selection
+    const filteredDevices = selectedType === DEVICE_TYPES.ANY ? devices : devices.filter((device) => device.type === selectedType)
+    // functions to sort devices based on selection
     const sortFunctions = {
       [SORT_OPTIONS.CAP_DESCENDING]: (a, b) => Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
       [SORT_OPTIONS.CAP_ASCENDING]: (a, b) => Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
       [SORT_OPTIONS.NAME_DESCENDING]: (a, b) => b.system_name?.localeCompare(a.system_name),
       [SORT_OPTIONS.NAME_ASCENDING]: (a, b) => a.system_name?.localeCompare(b.system_name),
     };
-    const sortedDevices = devices.slice().sort(sortFunctions[selectedSort])
+    // sort the already filtered devices list
+    const sortedDevices = filteredDevices.slice().sort(sortFunctions[selectedSort])
     setDisplayedDevices(sortedDevices)
-  }, [devices, selectedSort])
+  }, [devices, selectedSort, selectedType])
   
   // add/edit modal controls
   const [showAddModal, setShowAddModal] = useState(false);

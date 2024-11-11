@@ -19,9 +19,9 @@ export const postDevice = async (deviceData) => {
                 'Content-Type': 'application/json'  // Set header to indicate JSON data
             },
             body: JSON.stringify({
-                "system_name": deviceData.systemName,
-                "type": deviceData.deviceType,
-                "hdd_capacity": deviceData.hddCapacity
+                "system_name": deviceData.system_name,
+                "type": deviceData.type,
+                "hdd_capacity": deviceData.hdd_capacity
             })
         })
         if(!response.ok) throw new Error('Network response was not ok')
@@ -46,5 +46,25 @@ export const deleteDevice = async (deviceData) => {
         if (!response.ok) throw new Error('Network response was not ok')
     } catch (error) {
         console.error('DELETE call to add device failed:', error)
+    }
+};
+
+
+export const editDevice = async (deviceData) => {
+    try {
+        const response = await fetch(`${BASE_URL}/devices/${deviceData.id}`,{
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'  // Set header to indicate JSON data
+            },
+            body: JSON.stringify({
+                "system_name": deviceData.system_name,
+                "type": deviceData.type,
+                "hdd_capacity": deviceData.hdd_capacity
+            })
+        })
+        if (!response.ok) throw new Error('Network response was not ok')
+    } catch (error) {
+        console.error('PUT call to edit device failed:', error)
     }
 };

@@ -20,9 +20,9 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
     // Populate form fields when initialValues change
     useEffect(() => {
       if (mode === MODAL_MODES.EDIT && initialValues) {
-        setSystemName(initialValues.systemName || '');
-        setDeviceType(initialValues.deviceType || '');
-        setHddCapacity(initialValues.hddCapacity || '');
+        setSystemName(initialValues.system_name || '');
+        setDeviceType(initialValues.type || '');
+        setHddCapacity(initialValues.hdd_capacity || '');
       } else {
         resetFormInputs();
       }
@@ -30,7 +30,12 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const deviceData = { systemName, deviceType, hddCapacity };
+        const deviceData = { 
+            id: initialValues.id,
+            system_name: systemName,
+            type: deviceType,
+            hdd_capacity: hddCapacity
+        };
         onSubmit(deviceData);
         onClose(); // Close modal after submission
         resetFormInputs();
@@ -57,7 +62,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
             <div className="close-btn-wrapper">
                 <IconButton
                     onClick={handleClose}
-                    ariaLabel="close modal"
+                    aria-label="close modal"
                 >
                     <CloseIcon/>
                 </IconButton>

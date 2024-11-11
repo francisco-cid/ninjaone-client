@@ -6,7 +6,7 @@ import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
 import {ReactComponent as AddIcon} from './icons/add.svg';
 import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
-import { deleteDevice, fetchDevices, postDevice } from './api/devices';
+import { deleteDevice, editDevice, fetchDevices, postDevice } from './api/devices';
 import { useState, useEffect } from 'react';
 import { DEVICE_TYPES, SORT_OPTIONS, MODAL_MODES } from './constants';
 import AddEditModal from './components/AddEditModal/AddEditModal';
@@ -89,11 +89,18 @@ function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // add new device
-  const addDevice = async (requestBody) => {
-    await postDevice(requestBody);
+  const addDevice = async (deviceData) => {
+    await postDevice(deviceData);
     // re-fetch devices
     loadDevices();
   }
+
+  // opens add modal
+  // called when user clicks add button
+  const beginAdd = (deviceData) => {
+    setModalMode(MODAL_MODES.ADD);
+    setShowAddModal(true);
+  };
 
   // holds info for selected device in order to edit or delete it
   const [actionDeviceData, setActionDeviceData] = useState(null);
@@ -111,6 +118,21 @@ function App() {
     await deleteDevice(actionDeviceData);
     loadDevices();
   }
+
+  // opens edit modal and sets actionDeviceData to that of selected device
+  // called when user clicks edit button
+  const beginEdit = (deviceData) => {
+    setActionDeviceData(deviceData);
+    setModalMode(MODAL_MODES.EDIT);
+    setShowAddModal(true);
+  };
+
+  // calls api function to edit device and refetches devices
+  // called when user confirms device deletion
+  const updateDevice = async (deviceData) => {
+    await editDevice(deviceData);
+    loadDevices();
+  }
   
   return (
     <>
@@ -118,7 +140,10 @@ function App() {
         show={showAddModal}
         mode={modalMode}
         initialValues={actionDeviceData}
-        onSubmit={(req) => addDevice(req)}
+        onSubmit={modalMode === MODAL_MODES.ADD ?
+          (req) => addDevice(req) : 
+          (req) => updateDevice(req)
+        }
         onClose={()=>setShowAddModal(false)}
       />
       <DeleteModal
@@ -131,7 +156,7 @@ function App() {
       <div className="page-wrapper">
       <div className="row">
         <p className="subtitle">Devices</p>
-        <button className="add-btn" onClick={()  => setShowAddModal(true)}>
+        <button className="add-btn" onClick={beginAdd}>
           <AddIcon fill="white" className="add-icon"/>
           <p className="btn-text">Add device</p>
         </button>
@@ -161,13 +186,13 @@ function App() {
           <RefreshIcon/>
         </IconButton>
       </div>
-      <DataTable
-        devices={displayedDevices}
-        beginEdit={() => {}}
-        beginDelete={beginDelete}
-      />
-  </div>
-    </>
+        <DataTable
+          devices={displayedDevices}
+          beginEdit={beginEdit}
+          beginDelete={beginDelete}
+        />
+     </div>
+  </>
   );
 }
 

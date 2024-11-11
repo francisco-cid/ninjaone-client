@@ -3,7 +3,6 @@ import IconButton from '../IconButton/IconButton';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 
 const DeleteModal = ({ show, onClose, onDelete, deviceInfo }) => {
-    console.log('device info received in deleteModal', deviceInfo);
     const handleDelete = (e) => {
         e.preventDefault();
         onDelete(deviceInfo);
@@ -19,7 +18,7 @@ const DeleteModal = ({ show, onClose, onDelete, deviceInfo }) => {
                 <div className="close-btn-wrapper">
                     <IconButton
                         onClick={onClose}
-                        ariaLabel="close modal"
+                        aria-label="close modal"
                     >
                         <CloseIcon/>
                     </IconButton>

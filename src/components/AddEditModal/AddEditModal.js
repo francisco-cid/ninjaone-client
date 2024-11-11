@@ -8,6 +8,13 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
     const [systemName, setSystemName] = useState('');
     const [deviceType, setDeviceType] = useState('');
     const [hddCapacity, setHddCapacity] = useState('');
+
+    // clear form inputs
+    const resetFormInputs = () => {
+        setSystemName('');
+        setDeviceType('');
+        setHddCapacity('');
+    }
   
     // Populate form fields when initialValues change
     useEffect(() => {
@@ -16,9 +23,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         setDeviceType(initialValues.deviceType || '');
         setHddCapacity(initialValues.hddCapacity || '');
       } else {
-        setSystemName('');
-        setDeviceType('');
-        setHddCapacity('');
+        resetFormInputs();
       }
     }, [mode, initialValues]);
 
@@ -27,26 +32,15 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         const deviceData = { systemName, deviceType, hddCapacity };
         onSubmit(deviceData);
         onClose(); // Close modal after submission
-        // clear form inputs
-        setDeviceType('');
-        setSystemName('');
-        setHddCapacity('');
+        resetFormInputs();
     };
 
     const handleClose = () => {
-        // clear form inputs
-        setDeviceType('');
-        setSystemName('');
-        setHddCapacity('');
+        resetFormInputs();
         onClose();
     }
 
-    useEffect(() => {
-        console.log('deviceType:', deviceType)
-    },[deviceType])
-
     const deviceOptions = [
-        // {value: null, text: "Select type", disabled: true},
         {value: DEVICE_TYPES.WINDOWS, text: "Windows" },
         {value: DEVICE_TYPES.MAC, text: "Mac" },
         {value: DEVICE_TYPES.LINUX, text: "Linux"}

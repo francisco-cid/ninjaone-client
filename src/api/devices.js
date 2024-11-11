@@ -12,7 +12,6 @@ export const fetchDevices = async () => {
 };
 
 export const postDevice = async (requestBody) => {
-    console.log('requestBody', requestBody)
     try {
         const response = await fetch(`${BASE_URL}/devices`, {
             method: 'POST',

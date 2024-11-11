@@ -1,4 +1,5 @@
 import CustomSelect from '../CustomSelect/CustomSelect';
+import IconButton from '../IconButton/IconButton';
 import { DEVICE_TYPES, MODAL_MODES } from '../../constants';
 import { ReactComponent as CloseIcon } from '../../icons/close.svg';
 import { useState, useEffect } from 'react';
@@ -53,12 +54,12 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         <div className="modal-content">
         <div className="modal-header">
             <h2>{mode === MODAL_MODES.EDIT ? 'Edit device' : 'Add device'}</h2>
-            <button
-                className="close-btn"
+            <IconButton
                 onClick={handleClose}
+                ariaLabel="close modal"
             >
                 <CloseIcon/>
-            </button>
+            </IconButton>
         </div>
         <form onSubmit={handleSubmit}>
             <div className="field-container">

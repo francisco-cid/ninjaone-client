@@ -102,18 +102,3 @@
     flex-direction: row;
     justify-content: space-between;
 }
-
-.close-btn {
-    background: none; /* No default button background */
-    border: none;     /* Remove default button border */
-    cursor: pointer;  /* Makes the cursor a pointer on hover */
-    padding: 8px;     /* add padding for better click area */
-    transition: transform 0.2s ease, color 0.2s ease; /* Smooth transition */
-    position: relative;
-    bottom: 21px;
-    left: 10px;
-}
-  
-.close-btn:hover {
-    transform: scale(1.25);  /* Slightly enlarge icon on hover */
-}

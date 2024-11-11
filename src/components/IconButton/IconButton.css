@@ -1,0 +1,17 @@
+.icon-btn {
+    background: none; /* No default button background */
+    border: none;     /* Remove default button border */
+    cursor: pointer;  /* Makes the cursor a pointer on hover */
+    padding: 8px;
+    transition: background-color 0.3s ease; /* ease transition of bg color on hover */
+    border-radius: 4px;
+    height: 100%; /* allows svg to properly center within content */
+  }
+  
+  .icon-btn:hover {
+    background-color: #E8E8EA;
+  }
+
+  .icon-btn svg {
+    display: block;
+  }

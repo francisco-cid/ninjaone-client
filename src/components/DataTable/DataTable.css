@@ -10,11 +10,10 @@
     padding: 8px;
     border-bottom: 1px solid #CBCFD3;
     width: 100%;
-    font-family: Random;
 }
   
 .device-table td {
-    padding: 16px;
+    padding: 8px 12px;
     border-bottom: 1px solid #E7E8EB;
     font-size: 14px;
 }

@@ -31,6 +31,7 @@
   align-items: center;
   padding: 12px;
   cursor: pointer;
+  transition: opacity 0.3s ease; /* ease transition of btn color on hover */
 }
 
 .add-btn:hover {
@@ -45,16 +46,4 @@
 .subtitle {
   font-size: 20px;
   font-weight: 500;
-}
-
-.refresh-btn {
-  background: none; /* No default button background */
-  border: none;     /* Remove default button border */
-  cursor: pointer;  /* Makes the cursor a pointer on hover */
-  padding: 8px;     /* add padding for better click area */
-  transition: transform 0.2s ease, color 0.2s ease; /* Smooth transition */
-}
-
-.refresh-btn:hover {
-  transform: scale(1.25);  /* Slightly enlarge icon on hover */
 }

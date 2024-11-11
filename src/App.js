@@ -1,6 +1,7 @@
 import './App.css';
 import DataTable from './components/DataTable/DataTable';
 import NinjaHeader from './components/NinjaHeader/NinjaHeader';
+import IconButton from './components/IconButton/IconButton';
 import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
 import {ReactComponent as AddIcon} from './icons/add.svg';
 import CustomSelect from './components/CustomSelect/CustomSelect'
@@ -128,13 +129,12 @@ function App() {
             selectedValue={selectedSort}
           />
         </div>
-        <button
-        className="refresh-btn"
-        onClick={handleRefresh}
-        aria-label="refresh devices list"
+        <IconButton
+          onClick={handleRefresh}
+          aria-label="refresh devices list"
         >
           <RefreshIcon/>
-        </button>
+        </IconButton>
       </div>
       <DataTable devices={displayedDevices}/>
   </div>

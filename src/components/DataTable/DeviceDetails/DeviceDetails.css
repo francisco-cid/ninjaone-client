@@ -1,11 +1,14 @@
 .icon-name-row {
     display: flex;
     column-gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 .device-info {
-    color: #666;
-    font-size: 0.9rem;
+    font-size: 14px;
+    font-weight: 400;
+    color: #6E6D7A;
 }
 
 .device-details {

@@ -20,7 +20,7 @@ const DeviceDetails = ({name, type, capacity}) => {
         <div className="device-details">
             <div className={'icon-name-row'}>
                 <OSIcon/>
-                <strong>{name}</strong>
+                {name}
             </div>
             {type && capacity && 
             <div className="device-info">{`${type.charAt(0) + type.slice(1).toLowerCase()} workstation - ${capacity} GB`}</div>

@@ -54,12 +54,14 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         <div className="modal-content">
         <div className="modal-header">
             <h2>{mode === MODAL_MODES.EDIT ? 'Edit device' : 'Add device'}</h2>
-            <IconButton
-                onClick={handleClose}
-                ariaLabel="close modal"
-            >
-                <CloseIcon/>
-            </IconButton>
+            <div className="close-btn-wrapper">
+                <IconButton
+                    onClick={handleClose}
+                    ariaLabel="close modal"
+                >
+                    <CloseIcon/>
+                </IconButton>
+            </div>
         </div>
         <form onSubmit={handleSubmit}>
             <div className="field-container">

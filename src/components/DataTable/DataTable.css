@@ -1,16 +1,32 @@
 .device-table {
     width: 100%;
     border-collapse: collapse;
-  }
+}
   
-  .device-table th {
+.device-table th {
     text-align: left;
-    font-size: 1rem;
+    font-size: 14px;
+    font-weight: 500;
     padding: 8px;
-    border-bottom: 1px solid #ccc;
-  }
+    border-bottom: 1px solid #CBCFD3;
+    width: 100%;
+    font-family: Random;
+}
   
-  .device-table td {
+.device-table td {
     padding: 16px;
-    border-bottom: 1px solid #eee;
-  }
+    border-bottom: 1px solid #E7E8EB;
+    font-size: 14px;
+}
+
+.device-row:hover {
+  background-color: #F4F4F5;
+}
+
+.action-cell {
+  /* background-color: blue; */
+  text-align: right;
+  /* background: blue; */
+  width: 100px
+
+}

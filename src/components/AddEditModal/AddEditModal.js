@@ -105,7 +105,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         </form>
         </div>
     </div>
-    )
+    );
     
 };
 

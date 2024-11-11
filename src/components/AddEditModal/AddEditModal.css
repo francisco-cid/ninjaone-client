@@ -60,7 +60,7 @@
 }
   
   /* Modal action buttons */
-  .modal-actions {
+.modal-actions {
     display: flex;
     justify-content: flex-end;
     gap: 8px; /* Space between buttons */

@@ -6,10 +6,11 @@ import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
 import {ReactComponent as AddIcon} from './icons/add.svg';
 import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
-import { fetchDevices, postDevice } from './api/devices';
+import { deleteDevice, fetchDevices, postDevice } from './api/devices';
 import { useState, useEffect } from 'react';
 import { DEVICE_TYPES, SORT_OPTIONS, MODAL_MODES } from './constants';
 import AddEditModal from './components/AddEditModal/AddEditModal';
+import DeleteModal from './components/DeleteModal/DeleteModal';
 
 function App() {
 
@@ -83,7 +84,9 @@ function App() {
   // add/edit modal controls
   const [showAddModal, setShowAddModal] = useState(false);
   const [modalMode, setModalMode] = useState(MODAL_MODES.ADD); // ADD or EDIT
-  const [editDeviceData, setEditDeviceData] = useState(null);
+
+  // delete modal controls
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   // add new device
   const addDevice = async (requestBody) => {
@@ -92,15 +95,37 @@ function App() {
     loadDevices();
   }
 
+  // holds info for selected device in order to edit or delete it
+  const [actionDeviceData, setActionDeviceData] = useState(null);
+
+  // opens modal and sets actionDeviceData to that of the selected device
+  // called when user clicks delete menu item
+  const beginDelete = (deviceData) => {
+    setActionDeviceData(deviceData);
+    setShowDeleteModal(true);
+  }
+
+  // calls api function to delete device and refetches devices
+  // called when user confirms device deletion
+  const removeDevice = async () => {
+    await deleteDevice(actionDeviceData);
+    loadDevices();
+  }
   
   return (
     <>
       <AddEditModal
         show={showAddModal}
         mode={modalMode}
-        initialValues={editDeviceData}
+        initialValues={actionDeviceData}
         onSubmit={(req) => addDevice(req)}
         onClose={()=>setShowAddModal(false)}
+      />
+      <DeleteModal
+        show={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onDelete={removeDevice}
+        deviceInfo={actionDeviceData}
       />
       <NinjaHeader/>
       <div className="page-wrapper">
@@ -136,7 +161,11 @@ function App() {
           <RefreshIcon/>
         </IconButton>
       </div>
-      <DataTable devices={displayedDevices}/>
+      <DataTable
+        devices={displayedDevices}
+        beginEdit={() => {}}
+        beginDelete={beginDelete}
+      />
   </div>
     </>
   );

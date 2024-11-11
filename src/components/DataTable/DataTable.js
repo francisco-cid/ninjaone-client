@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './DataTable.css'
 import ToggleMenu from '../ToggleMenu/ToggleMenu';
 
-const DataTable = ({devices}) => {
+const DataTable = ({devices, beginEdit, beginDelete }) => {
     // determines which row if any should display action menu
     const [hoveredRow, setHoveredRow] = useState(null)
     return (
@@ -29,7 +29,10 @@ const DataTable = ({devices}) => {
                     </td>
                     <td className="action-cell">
                     {hoveredRow === device.id && (
-                            <ToggleMenu/>
+                            <ToggleMenu
+                                onEdit={() => beginEdit(device)}
+                                onDelete={() => beginDelete(device)}
+                            />
                     )}
                      </td>
                     

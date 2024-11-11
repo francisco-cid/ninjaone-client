@@ -27,10 +27,26 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         const deviceData = { systemName, deviceType, hddCapacity };
         onSubmit(deviceData);
         onClose(); // Close modal after submission
+        // clear form inputs
+        setDeviceType('');
+        setSystemName('');
+        setHddCapacity('');
     };
 
+    const handleClose = () => {
+        // clear form inputs
+        setDeviceType('');
+        setSystemName('');
+        setHddCapacity('');
+        onClose();
+    }
+
+    useEffect(() => {
+        console.log('deviceType:', deviceType)
+    },[deviceType])
+
     const deviceOptions = [
-        {value: null, text: "Select type", disabled: true},
+        // {value: null, text: "Select type", disabled: true},
         {value: DEVICE_TYPES.WINDOWS, text: "Windows" },
         {value: DEVICE_TYPES.MAC, text: "Mac" },
         {value: DEVICE_TYPES.LINUX, text: "Linux"}
@@ -45,7 +61,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
             <h2>{mode === MODAL_MODES.EDIT ? 'Edit device' : 'Add device'}</h2>
             <button
                 className="close-btn"
-                onClick={onClose}
+                onClick={handleClose}
             >
                 <CloseIcon/>
             </button>
@@ -71,6 +87,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
                     label=""
                     onChange={setDeviceType}
                     selectedValue={deviceType}
+                    placeholder="Select a type"
                 />
             </div>
             <div className="field-container">
@@ -85,7 +102,7 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
                 />
             </div>
             <div className="modal-actions">
-            <button type="button" onClick={onClose}>Cancel</button>
+            <button type="button" onClick={handleClose}>Cancel</button>
             <button type="submit">Submit</button>
             </div>
         </form>

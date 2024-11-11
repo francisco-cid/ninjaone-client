@@ -5,7 +5,7 @@ import {ReactComponent as RefreshIcon} from './icons/refresh.svg';
 import {ReactComponent as AddIcon} from './icons/add.svg';
 import CustomSelect from './components/CustomSelect/CustomSelect'
 import CustomSearch from './components/CustomSearch/CustomSearch';
-import { fetchDevices } from './api/devices';
+import { fetchDevices, postDevice } from './api/devices';
 import { useState, useEffect } from 'react';
 import { DEVICE_TYPES, SORT_OPTIONS, MODAL_MODES } from './constants';
 import AddEditModal from './components/AddEditModal/AddEditModal';
@@ -46,7 +46,6 @@ function App() {
   // fetch list of devices from API
   const loadDevices = async () => {
     const data = await fetchDevices();
-    console.log('data', data)
     setDevices(data)
   };
   // runs on first load to get devices
@@ -78,8 +77,8 @@ function App() {
     const sortFunctions = {
       [SORT_OPTIONS.CAP_DESCENDING]: (a, b) => Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
       [SORT_OPTIONS.CAP_ASCENDING]: (a, b) => Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
-      [SORT_OPTIONS.NAME_DESCENDING]: (a, b) => b.system_name.localeCompare(a.system_name),
-      [SORT_OPTIONS.NAME_ASCENDING]: (a, b) => a.system_name.localeCompare(b.system_name),
+      [SORT_OPTIONS.NAME_DESCENDING]: (a, b) => b.system_name?.localeCompare(a.system_name),
+      [SORT_OPTIONS.NAME_ASCENDING]: (a, b) => a.system_name?.localeCompare(b.system_name),
     };
     const sortedDevices = devices.slice().sort(sortFunctions[selectedSort])
     setDisplayedDevices(sortedDevices)
@@ -90,6 +89,12 @@ function App() {
   const [modalMode, setModalMode] = useState(MODAL_MODES.ADD); // ADD or EDIT
   const [editDeviceData, setEditDeviceData] = useState(null);
 
+  // add new device
+  const addDevice = async (requestBody) => {
+    await postDevice(requestBody);
+    // re-fetch devices
+    loadDevices();
+  }
 
   
   return (
@@ -98,6 +103,7 @@ function App() {
         show={showAddModal}
         mode={modalMode}
         initialValues={editDeviceData}
+        onSubmit={(req) => addDevice(req)}
         onClose={()=>setShowAddModal(false)}
       />
       <NinjaHeader/>

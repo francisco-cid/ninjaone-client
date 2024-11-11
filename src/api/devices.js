@@ -2,7 +2,6 @@ const BASE_URL = process.env.REACT_APP_API_BASE_URL;
 export const fetchDevices = async () => {
     try {
         const response = await fetch(`${BASE_URL}/devices`)
-        // return empty list of devices
         if(!response.ok) throw new Error('Network response was not ok')
         return response.json();
     } catch (error) {
@@ -11,3 +10,23 @@ export const fetchDevices = async () => {
         return [];
     }
 };
+
+export const postDevice = async (requestBody) => {
+    console.log('requestBody', requestBody)
+    try {
+        const response = await fetch(`${BASE_URL}/devices`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'  // Set header to indicate JSON data
+            },
+            body: JSON.stringify({
+                "system_name": requestBody.systemName,
+                "type": requestBody.deviceType,
+                "hdd_capacity": requestBody.hddCapacity
+            })
+        })
+        if(!response.ok) throw new Error('Network response was not ok')
+    } catch (error) {
+        console.error('POST to add device failed:', error)
+    }
+}

@@ -1,8 +1,7 @@
 import DeviceDetails from './DeviceDetails/DeviceDetails';
 import { useState } from 'react';
 import './DataTable.css'
-import IconButton from '../IconButton/IconButton';
-import { ReactComponent as ActionIcon } from '../../icons/action.svg';
+import ToggleMenu from '../ToggleMenu/ToggleMenu';
 
 const DataTable = ({devices}) => {
     // determines which row if any should display action menu
@@ -23,16 +22,14 @@ const DataTable = ({devices}) => {
                 <tr key={device.id}
                     className="device-row"
                     onMouseEnter={() => setHoveredRow(device.id)}
-                    // onMouseLeave={() => setHoveredRow(null)}
+                    onMouseLeave={() => setHoveredRow(null)}
                 >
                     <td>
                         <DeviceDetails name={device.system_name} type={device.type} capacity={device.hdd_capacity} />
                     </td>
                     <td className="action-cell">
                     {hoveredRow === device.id && (
-                            <IconButton>
-                                <ActionIcon/>
-                            </IconButton>
+                            <ToggleMenu/>
                     )}
                      </td>
                     

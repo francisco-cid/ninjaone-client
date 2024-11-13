@@ -10,6 +10,9 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
   const [deviceType, setDeviceType] = useState("");
   const [hddCapacity, setHddCapacity] = useState("");
 
+  // set to true is user attempts to submit form before selecting a deviceType
+  const [deviceTypeError, setDeviceTypeError] = useState(false);
+
   // clear form inputs
   const resetFormInputs = () => {
     setSystemName("");
@@ -30,12 +33,17 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!deviceType) {
+      setDeviceTypeError(true);
+      return;
+    }
     const deviceData = {
-      id: initialValues.id,
       system_name: systemName,
       type: deviceType,
       hdd_capacity: hddCapacity,
     };
+    // pass id only if editing device
+    if (mode === MODAL_MODES.EDIT) deviceData.id = initialValues.id;
     onSubmit(deviceData);
     onClose(); // Close modal after submission
     resetFormInputs();
@@ -80,10 +88,16 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
             <CustomSelect
               options={deviceOptions}
               label=""
-              onChange={setDeviceType}
+              onChange={(value) => {
+                setDeviceTypeError(false);
+                setDeviceType(value);
+              }}
               selectedValue={deviceType}
               placeholder="Select a type"
             />
+            {deviceTypeError && (
+              <span className="error-message">Please select a device</span>
+            )}
           </div>
           <div className="field-container">
             <label>HDD capacity (GB) *</label>

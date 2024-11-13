@@ -13,75 +13,29 @@ import {
   postDevice,
 } from "./api/devices";
 import { useState, useEffect } from "react";
-import { DEVICE_TYPES, SORT_OPTIONS, MODAL_MODES } from "./constants";
+import {
+  DEVICE_TYPES,
+  SORT_OPTIONS,
+  MODAL_MODES,
+  FILTER_DROPDOWN_OPTIONS,
+  SORT_DROPDOWN_OPTIONS,
+} from "./constants";
 import AddEditModal from "./components/AddEditModal/AddEditModal";
 import DeleteModal from "./components/DeleteModal/DeleteModal";
 
 function App() {
-  const filterOptions = [
-    { value: DEVICE_TYPES.ANY, text: "All" },
-    { value: DEVICE_TYPES.WINDOWS, text: "Windows" },
-    { value: DEVICE_TYPES.MAC, text: "Mac" },
-    { value: DEVICE_TYPES.LINUX, text: "Linux" },
-  ];
-
-  const sortOptions = [
-    { value: SORT_OPTIONS.CAP_DESCENDING, text: "HDD Capacity (Descending)" },
-    { value: SORT_OPTIONS.CAP_ASCENDING, text: "HDD Capacity (Ascending)" },
-    { value: SORT_OPTIONS.NAME_DESCENDING, text: "Name (Descending)" },
-    { value: SORT_OPTIONS.NAME_ASCENDING, text: "Name (Ascending)" },
-  ];
-
+  // selections for filter and sort options
   const [selectedType, setSelectedType] = useState(DEVICE_TYPES.ANY);
   const [selectedSort, setSelectedSort] = useState(SORT_OPTIONS.CAP_DESCENDING);
-
-  const defaultDevices = [
-    {
-      id: "1",
-      system_name: "DESKTOP-0VCBIFF",
-      type: "WINDOWS",
-      hdd_capacity: "128",
-    },
-    {
-      id: "2",
-      system_name: "LINUX-SMITH-J",
-      type: "LINUX",
-      hdd_capacity: "64",
-    },
-    {
-      id: "3",
-      system_name: "WINXP-125498HQ",
-      type: "WINDOWS",
-      hdd_capacity: "64",
-    },
-    { id: "4", system_name: "MAC-SMITH-JOHN", type: "MAC", hdd_capacity: "64" },
-    {
-      id: "5",
-      system_name: "MAC-RODRIGUEZ-J",
-      type: "MAC",
-      hdd_capacity: "32",
-    },
-    {
-      id: "6",
-      system_name: "DESKTOP-0VCBIFF",
-      type: "WINDOWS",
-      hdd_capacity: "32",
-    },
-    {
-      id: "7",
-      system_name: "LINUX-SMITH-J",
-      type: "LINUX",
-      hdd_capacity: "32",
-    },
-    { id: "8", system_name: "MAC-ADAMS-R", type: "MAC", hdd_capacity: "32" },
-  ];
 
   // latest list of devices retrieved from API
   const [devices, setDevices] = useState([]);
 
   // fetch list of devices from API
   const loadDevices = async () => {
+    console.log("calling api");
     const data = await fetchDevices();
+    console.log("loading devices", data);
     setDevices(data);
   };
   // runs on first load to get devices
@@ -109,9 +63,9 @@ function App() {
     // functions to sort devices based on selection
     const sortFunctions = {
       [SORT_OPTIONS.CAP_DESCENDING]: (a, b) =>
-        Number(b.hdd_capacity || 0) - Number(a.hdd_capacity || 0),
+        Number(b.hdd_capacity) - Number(a.hdd_capacity),
       [SORT_OPTIONS.CAP_ASCENDING]: (a, b) =>
-        Number(a.hdd_capacity || 0) - Number(b.hdd_capacity || 0),
+        Number(a.hdd_capacity) - Number(b.hdd_capacity),
       [SORT_OPTIONS.NAME_DESCENDING]: (a, b) =>
         b.system_name?.localeCompare(a.system_name),
       [SORT_OPTIONS.NAME_ASCENDING]: (a, b) =>
@@ -171,7 +125,7 @@ function App() {
   };
 
   // calls api function to edit device and refetches devices
-  // called when user confirms device deletion
+  // called when user submits edit form
   const updateDevice = async (deviceData) => {
     await editDevice(deviceData);
     loadDevices();
@@ -210,18 +164,20 @@ function App() {
             <CustomSearch placeholder="Search" />
             <CustomSelect
               label="Device Type:"
-              options={filterOptions}
+              options={FILTER_DROPDOWN_OPTIONS}
               onChange={setSelectedType}
               selectedValue={selectedType}
+              aria-label="filter devices"
             />
             <CustomSelect
               label="Sort by:"
-              options={sortOptions}
+              options={SORT_DROPDOWN_OPTIONS}
               onChange={setSelectedSort}
               selectedValue={selectedSort}
+              aria-label="sort devices"
             />
           </div>
-          <IconButton onClick={handleRefresh} aria-label="refresh devices list">
+          <IconButton onClick={handleRefresh} aria-label="refresh devices">
             <RefreshIcon />
           </IconButton>
         </div>

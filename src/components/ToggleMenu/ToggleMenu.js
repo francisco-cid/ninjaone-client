@@ -25,7 +25,7 @@ const ToggleMenu = ({ onEdit, onDelete }) => {
 
   return (
     <div className="menu-container">
-      <IconButton onClick={() => setIsOpen(!isOpen)}>
+      <IconButton onClick={() => setIsOpen(!isOpen)} aria-label="action menu">
         <ActionIcon />
       </IconButton>
       {isOpen && (

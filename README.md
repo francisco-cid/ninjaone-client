@@ -29,4 +29,6 @@ npm test
 ```
 
 ### Video Demo
-<!-- Add screenshots or a video demo here -->
+https://github.com/user-attachments/assets/7f9e35cb-3c63-46e4-a5e3-ff780422ccf9
+
+

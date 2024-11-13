@@ -10,8 +10,7 @@ const DataTable = ({ devices, beginEdit, beginDelete }) => {
     <table className="device-table">
       <thead>
         <tr>
-          <th>Device</th>
-          <th /> {/* Empty header for the action column */}
+          <th colSpan={2}>Device</th>
         </tr>
       </thead>
       <tbody>

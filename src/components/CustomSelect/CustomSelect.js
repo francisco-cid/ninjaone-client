@@ -7,6 +7,7 @@ const CustomSelect = ({
   onChange,
   label,
   placeholder,
+  ...selectProps
 }) => {
   return (
     <div className="select-container">
@@ -14,6 +15,7 @@ const CustomSelect = ({
         className="select"
         onChange={(e) => onChange && onChange(e.target.value)}
         value={selectedValue}
+        {...selectProps}
       >
         {placeholder && (
           <option value="" disabled>

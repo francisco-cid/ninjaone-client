@@ -75,16 +75,17 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="field-container">
-            <label>System name *</label>
+            <label id="name-label">System name *</label>
             <input
               type="text"
               value={systemName}
               onChange={(e) => setSystemName(e.target.value)}
               required
+              aria-labelledby="name-label"
             />
           </div>
           <div className="field-container">
-            <label>Device type *</label>
+            <label id="type-label">Device type *</label>
             <CustomSelect
               options={deviceOptions}
               label=""
@@ -94,18 +95,20 @@ const AddEditModal = ({ show, mode, initialValues, onClose, onSubmit }) => {
               }}
               selectedValue={deviceType}
               placeholder="Select a type"
+              aria-labelledby="type-label"
             />
             {deviceTypeError && (
               <span className="error-message">Please select a device</span>
             )}
           </div>
           <div className="field-container">
-            <label>HDD capacity (GB) *</label>
+            <label id="cap-label">HDD capacity (GB) *</label>
             <input
               type="number"
               value={hddCapacity}
               onChange={(e) => setHddCapacity(e.target.value)}
               required
+              aria-labelledby="cap-label"
             />
           </div>
           <div className="modal-actions">

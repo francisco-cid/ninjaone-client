@@ -1,6 +1,7 @@
 # NinjaOne Device Management Dashboard
 
 This project is a device management dashboard built with React (create-react-app), providing a user interface for viewing, adding, editing, and deleting device records. The dashboard allows filtering and sorting functionality for streamlined device management.
+<img width="1511" alt="Screenshot 2024-11-13 at 3 10 03 PM" src="https://github.com/user-attachments/assets/927c887b-385f-4570-a7ce-90cd0b9dcdb9">
 
 ### Running Locally
 
